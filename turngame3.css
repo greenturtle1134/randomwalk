@@ -1,0 +1,23 @@
+button{
+	font-size: xxx-large;
+}
+
+button.open{
+	background-color: lime;
+}
+
+button.restricted{
+	background-color: yellow;
+}
+
+button.forced{
+	background-color: red;
+}
+
+button.closed{
+	background-color: gray;
+}
+
+button.disableshow:disabled{
+	color: black;
+}
