@@ -7,19 +7,30 @@
     <script src="https://unpkg.com/vue@next"></script>
     </head>
     <body>
-        <div id="app" style="text-align: center;">
+        <div id="app" style="text-align: center; font-size: larger;">
           <div class="row m-1">
             <div v-for="i in 3" class="col">
-              <button class="w-100 m-1 p-3" v-bind:class="{open: !used[i-1]&&count==3, restricted: !used[i-1]&&count==2, forced: !used[i-1]&&count==1, closed: used[i-1]}" v-bind:disabled="used[i-1]" v-on:click="click(i-1)">{{names[i-1]}}</button>
+              <button class="w-100 m-1 p-3" v-bind:class="{open: (!five&&count==3)||(five&&count==3&&i-1==currRandom), restricted: !used[i-1]&&count==2, forced: !used[i-1]&&count==1, closed: used[i-1]||(five&&count==3&&i-1!=currRandom)}" v-bind:disabled="used[i-1]" v-on:click="click(i-1)">{{names[i-1]}}</button>
             </div>
           </div>
           <div class="row m-1">
             <div class="col">
-              <button class="m-1 p-2" v-bind:disabled="count!=1" v-on:click="dice()" v-bind:class="{disableshow: rolled}">🎲 {{diceText}} 🎲</button>
+              <button class="m-1 p-2" v-bind:disabled="(count!=1&&!five)||(five&&count==2)" v-on:click="dice()" v-bind:class="{disableshow: rolled}">🎲 {{diceText}} 🎲</button>
             </div>
+          </div>
+          <div class="row m-1" v-if="five">
+            <p style="border: 2px solid black; width: fit-content; margin: auto; font-size: xx-large;">Next up: <strong>{{names[nextRandom]}}</strong></p>
           </div>
           <div class="row m-1">
             <p>Turns made: {{turns}}<br>Dice rolled: {{rolls}}</p>
+          </div>
+          <div class="row m-1">
+            <div class="col">
+              <div class="form-check form-check-inline form-switch">
+                <label class="form-check-label" for="tg5switch">Turn Game 5 (<abbr title="Randomize the first choice">?</abbr>)</label>
+                <input class="form-check-input" type="checkbox" role="switch" id="tg5switch" v-model="five">
+              </div>
+            </div>
           </div>
         </div>
         <script src="turngame3.js"></script>
